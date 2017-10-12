@@ -1,2 +1,2 @@
-# guides
-A collection of how-to documents for Leap Rail customers
+# Guides
+A collection of how-to documents for LeapRail customers
