@@ -78,7 +78,7 @@ Closing the "Add Relying Party Trust" Wizard will automatically open the "Edit C
 1. Open your Powershell in ADFS.
 1. Run the following command in Powershell. Make sure to replace the `UUID` with the value you have received from LeapRail team for the `ClientId`.
 ```
-Add-ADFSClient -Name "Leaprail" -ClientId "<UUID of the client>" -RedirectUri="https://apps.leaprail.com/login/sso" -Description "OAuth 2.0 client for Leap Rail" 
+Add-ADFSClient -Name "Leaprail" -ClientId "<UUID of the client>" -RedirectUri "https://apps.leaprail.com/login/sso" -Description "OAuth 2.0 client for Leap Rail" 
 ```
 
 ## Set the NotBeforeSkew Parameter
