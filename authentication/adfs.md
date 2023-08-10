@@ -24,7 +24,7 @@ You will receive the following from LeapRail:
 ![](../assets/authentication/adfs/adfsfaq3.png)
 1. On the "Select Data Source" page, select "Enter data about the relying party manually" Upload the Metadata file from LeapRail.
 ![](../assets/authentication/adfs/adfsfaq4.png)
-1. Enter "Leaprail" as the Display Name, and add any additional notes that you'd like.
+1. Enter "Leaprail" as the Display Name, and add any additional notes that you'd like (Use "Leaprail Staging" if this is for integrating with Leap Rail Test environment).
 ![](../assets/authentication/adfs/adfsfaq5.png)
 1. Select "AD FS Profile" and continue
 ![](../assets/authentication/adfs/adfsfaq6.png)
@@ -32,7 +32,7 @@ You will receive the following from LeapRail:
 ![](../assets/authentication/adfs/adfsfaq7.png)
 1. No need to configure urls so continue to the next step
 ![](../assets/authentication/adfs/adfsfaq8.png)
-1. Add `<subdomain>.leaprail.com` as the identifier. You should have received the subdomain to use in this step from LeapRail team.
+1. Add `<subdomain>.leaprail.com` as the identifier. You should have received the subdomain to use in this step from LeapRail team (Use `staging-<subdomain>.leaprail.us` if this is for integrating with Leap Rail Test environment).
 ![](../assets/authentication/adfs/adfsfaq9.png)
 1. You’ll be given the option to set up Multi-factor authentication. This is isn't necessary for your LeapRail configuration, but feel free to add it if you'd like.
 ![](../assets/authentication/adfs/adfsfaq10.png)
@@ -52,8 +52,11 @@ Closing the "Add Relying Party Trust" Wizard will automatically open the "Edit C
 1. Select "Send LDAP Attributes as Claims" from the drop-down menu.
 ![](../assets/authentication/adfs/adfsfaq15.png)
 1. Name the claim rule "LDAP Email and Full Name" and select the "Active Directory" attribute store. Then, add the following rules:
-   * Select "E-Mail-Addresses" in the LDAP Attribute column. Select "E-Mail Address"in the Outgoing Claim Type column.
+   * Select "E-Mail-Addresses" in the LDAP Attribute column. Select "E-Mail Address" in the Outgoing Claim Type column.
+   * Select "Given-Name" in the LDAP Attribute column. Select "User.FirstName" in the Outgoing Claim Type column.
+   * Select "Surname" in the LDAP Attribute column. Select "User.LastName" in the Outgoing Claim Type column.
    * Select "Display-Name" in the LDAP Attribute column. Select "Name" into the Outgoing Claim Type column.
+   * Select "Group-Membership" in the LDAP Attribute column. Select "Role" into the Outgoing Claim Type column. This is where AD Groups will be mapped to Leap Rail Role ids. Your Leap Rail rep will provide you with a series of numeric ids. The Role field sent to Leap Rail should be a comma separated list of these ids corresponding to AD groups the user belongs to on your end.
 ![](../assets/authentication/adfs/adfsfaq16.png)
 1. You will now see the new rule in your list of claim rules for Leaprail. Click **Add Rule** to add the next rule.
 ![](../assets/authentication/adfs/adfsfaq17.png)
@@ -80,6 +83,11 @@ Closing the "Add Relying Party Trust" Wizard will automatically open the "Edit C
 ```
 Add-ADFSClient -Name "Leaprail" -ClientId "<UUID of the client>" -RedirectUri "https://apps.leaprail.com/login/sso" -Description "OAuth 2.0 client for Leap Rail" 
 ```
+If this is integrating with Leap Rail Test environment use the following instead
+```
+Add-ADFSClient -Name "Leaprail Staging" -ClientId "<UUID of the client>" -RedirectUri "https://staging-apps.leaprail.us/login/sso" -Description "OAuth 2.0 client for Leap Rail Staging" 
+```
+
 
 ## Set the NotBeforeSkew Parameter
 
@@ -93,12 +101,21 @@ To ensure that your users aren’t affected by server synchronization issues, pl
 Get-ADFSRelyingPartyTrust –identifier "<subdomain>.leaprail.com"
 ```
    * Your subdomain will match the Relying Party Identifier which was configured in Part One, Step 10. Typically, this is the name of your organization.
+If this is integrating with Leap Rail Test environment use the following instead
+```
+Get-ADFSRelyingPartyTrust –identifier "staging-<subdomain>.leaprail.us"
+```
 3. In the Powershell response, scroll to the attribute "NotBeforeSkew." The number next to the "NotBeforeSkew" will be the current time skew of that attribute in minutes.
 ![](../assets/authentication/adfs/adfsfaq21.png)
 4. Next, set the "NotBeforeSkew" to be 2 minutes by running the following command in the Powershell:
 ```
 Set-ADFSRelyingPartyTrust –TargetIdentifier "<subdomain>.leaprail.com" –NotBeforeSkew 2
 ```
+If this is integrating with Leap Rail Test environment use the following instead
+```
+Set-ADFSRelyingPartyTrust –TargetIdentifier "staging-<subdomain>.leaprail.us" –NotBeforeSkew 2
+```
+
 5. Check the new "NotBeforeSkew" by running the following command again:
 ```
 Get-ADFSRelyingPartyTrust –identifier "<subdomain>.leaprail.com"
