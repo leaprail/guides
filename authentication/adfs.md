@@ -143,7 +143,7 @@ Repeat the steps below for each Role that you got from the Leap Rail team.
 1. Open your Powershell in ADFS.
 1. Run the following command in Powershell. Make sure to replace the `UUID` with the value you have received from LeapRail team for the `ClientId`.
 ```
-Add-ADFSClient -Name "Leaprail" -ClientId "<UUID of the client>" -RedirectUri "https://apps.leaprail.com/login/sso" -Description "OAuth 2.0 client for Leap Rail" 
+Add-ADFSClient -Name "Leaprail" -ClientId "<UUID of the client>" -RedirectUri @("https://apps.leaprail.com/login/sso", "msauth.com.leaprail.leaprailmobileapp://auth", "msauth://com.leaprail.leaprailmobileapp/Xr5Dggr2GTI8jyHIlgwgwDa5JuY%3D") -Description "OAuth 2.0 client for Leap Rail" 
 ```
 If this is integrating with Leap Rail Test environment use the following instead
 ```
