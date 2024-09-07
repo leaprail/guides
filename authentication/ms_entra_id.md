@@ -28,6 +28,24 @@ You will receive the following from LeapRail for this process:
 
 ![](../assets/authentication/ms_entra_id/entra4.png)
 
+1. Click on "Manage" and then "Authentication" on the left menu. Click on "Add a platform".
+
+![](../assets/authentication/ms_entra_id/entra20.png)
+
+1. Click on "Web" and enter "https://apps.leaprail.com/login/sso" as "Redirect Uri" and then click on "Configure" button at the bottom.
+
+![](../assets/authentication/ms_entra_id/entra22.png)
+
+1. Click on "Add a platform" again and then "iOS / macOS" and enter "com.leaprail.leaprailmobileapp" as "Bundle Id" and then click on "Configure".
+
+![](../assets/authentication/ms_entra_id/entra21.png)
+
+1. Click on "Add a platform" one more time and then "Android" and enter "com.leaprail.leaprailmobileapp" as "Package name", "Xr5Dggr2GTI8jyHIlgwgwDa5JuY=" as "Signature hash", and then click on "Configure".
+
+1. Click on "Save" to add all three authentication methods.
+
+![](../assets/authentication/ms_entra_id/entra23.png)
+
 1. Click on "Manage" and then "Certificates & Secrets" on the left menu. On the tabs in the middle of the screen, click on "Certificates".
 
 ![](../assets/authentication/ms_entra_id/entra5.png)
